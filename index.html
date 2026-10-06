@@ -1,0 +1,1019 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>POLA XAT</title>
+    <meta name="description" content="POLA XAT Profile Card with About, Player, Timeline, and Gallery." />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Montserrat:wght@700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              tealBg: '#0e6d87',
+              darkTeal: '#084d61',
+              neonTeal: '#1bd4d4',
+            },
+            fontFamily: {
+              archivo: ['"Archivo Black"', 'sans-serif'],
+              montserrat: ['"Montserrat"', 'sans-serif'],
+              tech: ['"Share Tech Mono"', 'monospace'],
+            },
+            screens: {
+              xs: '420px',
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background-color: #0e6d87;
+        font-family: 'Montserrat', sans-serif;
+        user-select: none;
+        -webkit-user-select: none;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+      }
+      .font-archivo {
+        font-family: 'Archivo Black', 'Montserrat', sans-serif;
+      }
+      .font-tech {
+        font-family: 'Share Tech Mono', monospace;
+      }
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 4px;
+      }
+      ::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.4);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #1bd4d4;
+        border-radius: 2px;
+      }
+
+      /* Ultra-Smooth Tab Panels Transition */
+      .tab-panel {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transform: scale(0.985) translateX(24px);
+        transition: opacity 0.28s cubic-bezier(0.25, 0.1, 0.25, 1),
+                    transform 0.28s cubic-bezier(0.25, 0.1, 0.25, 1),
+                    visibility 0.28s;
+        pointer-events: none;
+      }
+      .tab-panel.active {
+        opacity: 1;
+        visibility: visible;
+        transform: scale(1) translateX(0);
+        pointer-events: auto;
+      }
+      .tab-panel.exit-prev {
+        opacity: 0;
+        visibility: hidden;
+        transform: scale(0.985) translateX(-24px);
+        pointer-events: none;
+      }
+      .tab-panel.enter-prev {
+        transform: scale(0.985) translateX(-24px);
+      }
+    </style>
+  </head>
+  <body class="min-h-screen w-full bg-[#0e6d87] flex flex-col items-center justify-center p-2 xs:p-3 sm:p-6 relative overflow-hidden">
+    <!-- Ambient Floating Particles Canvas -->
+    <canvas id="particlesCanvas" class="absolute inset-0 pointer-events-none z-0 opacity-80"></canvas>
+
+    <!-- Hidden Persistent Audio Element -->
+    <audio id="audioPlayer" preload="metadata"></audio>
+
+    <!-- Main Fixed Container -->
+    <div class="relative z-10 w-full max-w-[690px] mx-auto flex flex-col items-center">
+      
+      <!-- Top Action Bar: POLA XAT ▶ (زرار NEXT) -->
+      <div class="w-full h-9 sm:h-10 flex justify-between items-end mb-1 px-1 shrink-0">
+        <button
+          id="btnNext"
+          class="group flex items-center gap-1 sm:gap-1.5 text-black font-archivo font-black text-lg xs:text-xl sm:text-2xl tracking-wide uppercase cursor-pointer focus:outline-none transition-opacity hover:opacity-80 active:opacity-95"
+          title="Next Section (زرار NEXT)"
+        >
+          <span>POLA XAT</span>
+          <span class="inline-block transition-transform duration-200 group-hover:translate-x-1">▶</span>
+        </button>
+
+        <!-- Direct Tab Indicators -->
+        <div id="tabIndicators" class="flex items-center gap-1 sm:gap-1.5 pb-1">
+          <button data-tab="0" class="tab-dot w-5 sm:w-6 h-1.5 sm:h-2 bg-black rounded-full cursor-pointer transition-all"></button>
+          <button data-tab="1" class="tab-dot w-1.5 sm:w-2 h-1.5 sm:h-2 bg-black/35 rounded-full cursor-pointer transition-all"></button>
+          <button data-tab="2" class="tab-dot w-1.5 sm:w-2 h-1.5 sm:h-2 bg-black/35 rounded-full cursor-pointer transition-all"></button>
+          <button data-tab="3" class="tab-dot w-1.5 sm:w-2 h-1.5 sm:h-2 bg-black/35 rounded-full cursor-pointer transition-all"></button>
+        </div>
+      </div>
+
+      <!-- Outer Black Border Frame -->
+      <div class="w-full border-3 sm:border-4 border-black p-1 sm:p-2 bg-[#0e6d87] shadow-2xl shrink-0">
+        
+        <!-- Inner Card Box -->
+        <div class="w-full flex flex-col bg-[#084d61] overflow-hidden">
+          
+          <!-- Top Solid Black Bar with Playing Song Display -->
+          <div class="w-full h-8 xs:h-9 sm:h-11 bg-black shrink-0 flex items-center justify-between px-3 sm:px-4">
+            <div class="flex items-center gap-1.5 sm:gap-2">
+              <span class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#0e6d87]"></span>
+              <span class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#0e6d87]"></span>
+            </div>
+            
+            <!-- Song Title Display in Header -->
+            <div id="topMusicIndicator" class="flex items-center gap-2 cursor-pointer hover:opacity-85 transition-opacity" title="Now Playing (Click to view Player)">
+              <div id="headerWaveBars" class="flex items-end gap-0.5 h-3">
+                <span class="w-0.5 bg-[#1bd4d4] h-2.5 transition-all"></span>
+                <span class="w-0.5 bg-[#1bd4d4] h-1.5 transition-all"></span>
+                <span class="w-0.5 bg-[#1bd4d4] h-3 transition-all"></span>
+              </div>
+              <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#1bd4d4]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12 0c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z"/>
+              </svg>
+              <span id="topMusicTitle" class="font-bold text-[10px] sm:text-xs text-[#1bd4d4] truncate max-w-[150px] xs:max-w-[210px] sm:max-w-[260px]" dir="rtl">
+                باسم الحب الجميل
+              </span>
+            </div>
+          </div>
+
+          <!-- Central Fixed Content Window -->
+          <div class="relative w-full h-[290px] xs:h-[305px] sm:h-[325px] bg-[#084d61] overflow-hidden">
+            
+            <!-- TAB 0: ABOUT -->
+            <div id="tab-0" class="tab-panel active">
+              <div class="w-full h-full flex flex-col justify-center items-center px-3 sm:px-8 select-none">
+                <div class="w-full max-w-lg flex flex-row items-center justify-center gap-4 sm:gap-10 py-1">
+                  <div class="relative shrink-0">
+                    <div id="avatarFrame" class="w-24 h-24 xs:w-28 xs:h-28 sm:w-36 sm:h-36 rounded-full border-3 sm:border-4 border-black overflow-hidden shadow-xl bg-black/20 flex items-center justify-center transition-all duration-300 hover:scale-105 hover:border-[#1bd4d4] cursor-pointer">
+                      <img src="https://i.ibb.co/n791zy2/Default-Cute-anime-boy-pray-3d-art-cartoon-blue-1-30826f36-54b1-49e4-b141-5caad93c4a2c-0.jpg" alt="POLA Avatar" class="w-full h-full object-cover select-none" />
+                    </div>
+                  </div>
+                  <div class="flex flex-col items-start text-black select-none">
+                    <h2 class="font-archivo text-2xl xs:text-3xl sm:text-5xl tracking-wider mb-1.5 sm:mb-2.5 text-black uppercase">ABOUT</h2>
+                    <div class="flex flex-col space-y-1 sm:space-y-1.5 text-black font-extrabold text-xs xs:text-sm sm:text-base tracking-wider sm:tracking-widest uppercase">
+                      <div class="flex items-center gap-1.5 sm:gap-2"><span class="font-black text-black">NAME :</span><span>POLA</span></div>
+                      <div class="flex items-center gap-1.5 sm:gap-2"><span class="font-black text-black">JOB :</span><span>CONTENT CREATOR</span></div>
+                      <div class="flex items-center gap-1.5 sm:gap-2"><span class="font-black text-black">PLACE :</span><span>TEXAS</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 1: PLAYER -->
+            <div id="tab-1" class="tab-panel">
+              <div class="w-full h-full flex flex-col items-center justify-center px-2 xs:px-4 sm:px-6 select-none">
+                <h2 class="font-archivo text-xl xs:text-2xl sm:text-4xl tracking-wider text-black uppercase mb-1.5 sm:mb-2">PLAYER</h2>
+                
+                <div class="relative w-full max-w-[390px] bg-black border-2 border-black p-2.5 sm:p-3 shadow-2xl flex flex-col justify-between">
+                  <!-- Player Header -->
+                  <div class="flex items-center justify-between gap-2 border-b border-[#084d61] pb-1.5 mb-1.5">
+                    <div class="flex items-center gap-1.5 overflow-hidden">
+                      <svg class="w-3.5 h-3.5 text-[#1bd4d4] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <circle cx="12" cy="12" r="3"/>
+                      </svg>
+                      <span id="playerTrackIndexBadge" class="font-tech text-[10px] text-[#1bd4d4] bg-[#084d61]/40 px-1 py-0.5 rounded font-bold shrink-0">
+                        01/07
+                      </span>
+                      <div id="playerSongTitle" class="truncate font-bold text-xs sm:text-sm text-white" dir="rtl">
+                        باسم الحب الجميل
+                      </div>
+                    </div>
+                    <button id="btnPlaylist" class="p-1 rounded text-[#1bd4d4] hover:bg-[#084d61]/50 cursor-pointer shrink-0" title="Playlist">
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+                      </svg>
+                    </button>
+                  </div>
+
+                  <!-- Visualizer Bars -->
+                  <div id="visualizerContainer" class="h-6 flex items-end justify-center gap-1 mb-2 px-1.5 bg-[#084d61]/30 rounded py-0.5 border border-[#084d61]/40">
+                    <!-- Dynamic Bars -->
+                  </div>
+
+                  <!-- Seek Bar -->
+                  <div class="mb-1.5">
+                    <div id="seekTrack" class="relative w-full h-1.5 bg-[#084d61]/40 rounded-full cursor-pointer overflow-hidden">
+                      <div id="progressBar" class="h-full bg-[#1bd4d4] w-0 transition-all"></div>
+                    </div>
+                    <div class="flex justify-between items-center text-[9px] font-tech text-[#1bd4d4]/80 mt-0.5">
+                      <span id="timeCur">00:00</span>
+                      <span id="timeDur">00:00</span>
+                    </div>
+                  </div>
+
+                  <!-- Controls Row -->
+                  <div class="flex items-center justify-between pt-1 border-t border-[#084d61]/50">
+                    <div class="flex items-center gap-1 w-20">
+                      <button id="playerMuteBtn" class="text-[#1bd4d4] cursor-pointer">
+                        <svg id="playerVolSvg" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                        </svg>
+                      </button>
+                      <input id="volumeSlider" type="range" min="0" max="1" step="0.05" value="0.85" class="w-12 h-1 accent-[#1bd4d4] bg-[#084d61] cursor-pointer" />
+                    </div>
+
+                    <div class="flex items-center gap-2.5">
+                      <button id="btnPrevTrack" class="p-1 text-[#1bd4d4] hover:text-white cursor-pointer active:scale-95" title="Previous Track">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                          <polygon points="19 20 9 12 19 4 19 20"/>
+                          <line x1="5" y1="19" x2="5" y2="5" stroke="currentColor" stroke-width="3"/>
+                        </svg>
+                      </button>
+                      <button id="btnPlayPause" class="w-7 h-7 rounded-full bg-[#1bd4d4] text-black flex items-center justify-center font-bold shadow-md cursor-pointer transition-transform active:scale-90" title="Play / Pause">
+                        <svg id="playIconSvg" class="w-3 h-3 fill-black ml-0.5" viewBox="0 0 24 24">
+                          <polygon points="5 3 19 12 5 21 5 3"/>
+                        </svg>
+                      </button>
+                      <button id="btnNextTrack" class="p-1 text-[#1bd4d4] hover:text-white cursor-pointer active:scale-95" title="Next Track">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                          <polygon points="5 4 15 12 5 20 5 4"/>
+                          <line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="3"/>
+                        </svg>
+                      </button>
+                    </div>
+
+                    <div class="w-20 text-right">
+                      <span id="playerStatusBadge" class="font-tech text-[9px] tracking-wider text-[#1bd4d4] font-bold">• STOP</span>
+                    </div>
+                  </div>
+
+                  <!-- Playlist Modal Drawer -->
+                  <div id="playlistDrawer" class="hidden absolute inset-0 bg-black/95 z-20 p-2 rounded-sm flex flex-col border border-[#1bd4d4]">
+                    <div class="flex items-center justify-between pb-1 border-b border-[#084d61] text-xs font-bold text-neutral-200">
+                      <span class="text-[#1bd4d4] font-tech text-[11px]">TRACKS (07)</span>
+                      <button id="btnClosePlaylist" class="text-[#1bd4d4] text-[10px] px-1.5 py-0.5 bg-[#084d61]/60 rounded cursor-pointer font-tech font-bold">
+                        CLOSE
+                      </button>
+                    </div>
+                    <div id="playlistItems" class="flex-1 overflow-y-auto mt-1 space-y-0.5 pr-1 max-h-[135px]">
+                      <!-- Injected via JS -->
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 2: TIME LINE -->
+            <div id="tab-2" class="tab-panel">
+              <div class="w-full h-full flex flex-col items-center justify-center px-2 xs:px-4 sm:px-6 select-none">
+                <h2 class="font-archivo text-xl xs:text-2xl sm:text-4xl tracking-wider text-black uppercase mb-1.5 sm:mb-2">TIME LINE</h2>
+                <div class="w-full max-w-[390px] bg-black border-2 border-black p-2.5 sm:p-3 shadow-2xl flex flex-col justify-between">
+                  
+                  <div class="flex items-center justify-between border-b border-[#084d61] pb-1 mb-1.5">
+                    <div class="flex items-center gap-1.5 text-[10px] text-[#1bd4d4] font-tech font-bold">
+                      <span class="w-1.5 h-1.5 rounded-full bg-[#1bd4d4] animate-ping"></span>
+                      <span class="w-1.5 h-1.5 rounded-full bg-[#1bd4d4] -ml-3"></span>
+                      <span>VISITOR SYNC</span>
+                    </div>
+                    <span class="text-[9px] font-tech text-[#1bd4d4]/70 uppercase tracking-widest font-bold">12-HOUR SYSTEM</span>
+                  </div>
+
+                  <!-- Digital Clock -->
+                  <div class="flex flex-col items-center justify-center py-1.5 bg-[#084d61]/25 rounded border border-[#084d61]/40 mb-1.5">
+                    <div class="flex items-baseline gap-1.5">
+                      <span id="liveClockTime" class="font-tech text-2xl xs:text-3xl sm:text-4xl font-black tracking-widest text-[#1bd4d4] drop-shadow-[0_0_8px_rgba(27,212,212,0.4)]">00:00:00</span>
+                      <span id="liveClockAmPm" class="font-archivo text-sm xs:text-base sm:text-xl text-white font-black tracking-wider">AM</span>
+                    </div>
+                    <div class="flex items-center gap-1 text-[10px] text-[#1bd4d4]/80 font-bold tracking-wide">
+                      <svg class="w-3 h-3 text-[#1bd4d4]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                      </svg>
+                      <span>LOCAL TIME</span>
+                    </div>
+                  </div>
+
+                  <!-- English Date -->
+                  <div class="bg-[#084d61]/25 rounded p-1.5 mb-1.5 border border-[#084d61]/40 flex items-center justify-between">
+                    <div class="flex items-center gap-1.5 truncate">
+                      <svg class="w-3.5 h-3.5 text-[#1bd4d4] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/>
+                        <line x1="8" y1="2" x2="8" y2="6"/>
+                        <line x1="3" y1="10" x2="21" y2="10"/>
+                      </svg>
+                      <div class="flex flex-col truncate">
+                        <span class="text-[8px] text-[#1bd4d4]/60 uppercase font-tech font-bold">DATE IN ENGLISH</span>
+                        <span id="liveDateText" class="font-bold text-xs sm:text-sm tracking-wide text-white truncate">LOADING DATE...</span>
+                      </div>
+                    </div>
+                    <span id="liveYearBadge" class="text-[9px] font-tech text-[#1bd4d4] bg-[#084d61]/50 px-1.5 py-0.5 rounded font-bold shrink-0 ml-1">2026</span>
+                  </div>
+
+                  <!-- Region & Timezone -->
+                  <div class="bg-[#084d61]/25 rounded p-1.5 border border-[#084d61]/40 flex items-center justify-between">
+                    <div class="flex items-center gap-1.5 overflow-hidden">
+                      <svg class="w-3.5 h-3.5 text-[#1bd4d4] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="2" y1="12" x2="22" y2="12"/>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                      </svg>
+                      <div class="flex flex-col overflow-hidden">
+                        <span class="text-[8px] text-[#1bd4d4]/60 uppercase font-tech font-bold">REGION & TIMEZONE</span>
+                        <div id="liveLocationCity" class="truncate font-bold text-xs text-white tracking-wide">LOCATION</div>
+                        <span id="liveTimezoneString" class="text-[9px] text-[#1bd4d4]/70 truncate font-tech">TIMEZONE</span>
+                      </div>
+                    </div>
+                    <div class="flex flex-col items-end shrink-0 pl-1.5">
+                      <span id="liveUtcOffset" class="font-tech text-[10px] text-[#1bd4d4] font-bold">UTC+00:00</span>
+                      <span id="liveTzAbbr" class="text-[8px] text-neutral-400 uppercase font-tech">SYNC</span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 3: GALLERY -->
+            <div id="tab-3" class="tab-panel">
+              <div class="w-full h-full flex flex-col items-center justify-center px-2 xs:px-3 sm:px-6 select-none">
+                <h2 class="font-archivo text-xl xs:text-2xl sm:text-4xl tracking-wider text-black uppercase mb-2 sm:mb-3">GALLERY</h2>
+                
+                <div class="w-full max-w-lg flex items-center justify-center gap-1.5 xs:gap-2 sm:gap-3 py-1">
+                  <!-- Photo 1 -->
+                  <div data-photo-idx="0" class="gallery-card group relative aspect-square w-12 h-12 xs:w-14 xs:h-14 sm:w-20 sm:h-20 md:w-22 md:h-22 cursor-pointer overflow-hidden transition-all duration-200 ease-out transform border-2 sm:border-3 border-[#1bd4d4] scale-110 -translate-y-1.5 z-20 shadow-[0_6px_16px_rgba(0,0,0,0.6)] bg-black shrink-0">
+                    <img src="https://i.ibb.co/pXfwCcv/2d79b46de2deb3744fd330d815b76751.jpg" alt="Photo 1" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-115" />
+                    <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500 pointer-events-none"></div>
+                    <div class="active-dot absolute top-1 right-1 w-1.5 h-1.5 bg-[#1bd4d4] rounded-full pointer-events-none"></div>
+                  </div>
+                  <!-- Photo 2 -->
+                  <div data-photo-idx="1" class="gallery-card group relative aspect-square w-12 h-12 xs:w-14 xs:h-14 sm:w-20 sm:h-20 md:w-22 md:h-22 cursor-pointer overflow-hidden transition-all duration-200 ease-out transform border-2 sm:border-3 border-black hover:border-[#1bd4d4]/70 hover:scale-105 z-10 shadow-md bg-black shrink-0">
+                    <img src="https://i.ibb.co/Jyq80hX/bfa64e7da2612eb344663aa3fbcf2f59.png" alt="Photo 2" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-115" />
+                    <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500 pointer-events-none"></div>
+                    <div class="active-dot hidden absolute top-1 right-1 w-1.5 h-1.5 bg-[#1bd4d4] rounded-full pointer-events-none"></div>
+                  </div>
+                  <!-- Photo 3 -->
+                  <div data-photo-idx="2" class="gallery-card group relative aspect-square w-12 h-12 xs:w-14 xs:h-14 sm:w-20 sm:h-20 md:w-22 md:h-22 cursor-pointer overflow-hidden transition-all duration-200 ease-out transform border-2 sm:border-3 border-black hover:border-[#1bd4d4]/70 hover:scale-105 z-10 shadow-md bg-black shrink-0">
+                    <img src="https://i.ibb.co/gj641dk/a04139cd7029ece536fc8d517b678b31.png" alt="Photo 3" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-115" />
+                    <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500 pointer-events-none"></div>
+                    <div class="active-dot hidden absolute top-1 right-1 w-1.5 h-1.5 bg-[#1bd4d4] rounded-full pointer-events-none"></div>
+                  </div>
+                  <!-- Photo 4 -->
+                  <div data-photo-idx="3" class="gallery-card group relative aspect-square w-12 h-12 xs:w-14 xs:h-14 sm:w-20 sm:h-20 md:w-22 md:h-22 cursor-pointer overflow-hidden transition-all duration-200 ease-out transform border-2 sm:border-3 border-black hover:border-[#1bd4d4]/70 hover:scale-105 z-10 shadow-md bg-black shrink-0">
+                    <img src="https://i.ibb.co/gDyC1v0/ss.png" alt="Photo 4" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-115" />
+                    <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500 pointer-events-none"></div>
+                    <div class="active-dot hidden absolute top-1 right-1 w-1.5 h-1.5 bg-[#1bd4d4] rounded-full pointer-events-none"></div>
+                  </div>
+                  <!-- Photo 5 -->
+                  <div data-photo-idx="4" class="gallery-card group relative aspect-square w-12 h-12 xs:w-14 xs:h-14 sm:w-20 sm:h-20 md:w-22 md:h-22 cursor-pointer overflow-hidden transition-all duration-200 ease-out transform border-2 sm:border-3 border-black hover:border-[#1bd4d4]/70 hover:scale-105 z-10 shadow-md bg-black shrink-0">
+                    <img src="https://i.ibb.co/vLw8xv0/sswe.png" alt="Photo 5" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-115" />
+                    <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500 pointer-events-none"></div>
+                    <div class="active-dot hidden absolute top-1 right-1 w-1.5 h-1.5 bg-[#1bd4d4] rounded-full pointer-events-none"></div>
+                  </div>
+                </div>
+
+                <!-- Gallery Status Badge -->
+                <div class="mt-2.5 sm:mt-3 flex items-center gap-2 px-2.5 py-0.5 bg-black border border-black rounded-sm text-xs shadow-md">
+                  <div class="flex items-center gap-1.5 text-[#1bd4d4] font-tech font-bold text-[10px] sm:text-[11px]">
+                    <svg class="w-3 h-3 text-[#1bd4d4]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                      <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                    <span id="galleryCounterText">PHOTO 01 / 05</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Separator & Watermark -->
+          <div class="w-full h-5 sm:h-6 bg-[#084d61] px-2 flex items-center shrink-0">
+            <div class="flex-1 h-[2px] bg-black"></div>
+            <span class="font-archivo text-[9px] sm:text-[11px] font-black text-black tracking-widest pl-2 uppercase select-none">
+              XAT.COM
+            </span>
+          </div>
+
+          <!-- Bottom Solid Black Bar -->
+          <div class="w-full h-7 xs:h-8 sm:h-9 bg-black shrink-0"></div>
+        </div>
+      </div>
+
+      <!-- Bottom Action Bar: ◀ GOD IS LOVE (زرار PREVIOUS) -->
+      <div class="w-full h-9 sm:h-10 flex justify-between items-start mt-1 px-1 shrink-0">
+        <!-- Audio Helpers with Crisp Monochromatic Vectors -->
+        <div class="flex items-center gap-2 sm:gap-3 pt-0.5 sm:pt-1">
+          <button id="btnMuteSong" class="flex items-center gap-1.5 text-black/85 hover:text-black font-tech text-[10px] sm:text-xs uppercase cursor-pointer transition-colors" title="Toggle Mute">
+            <svg id="footerVolSvg" class="w-3.5 h-3.5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+            </svg>
+            <span id="muteSongText" class="hidden xs:inline font-bold">85%</span>
+          </button>
+
+          <button id="btnToggleSFX" class="flex items-center gap-1 font-tech text-[10px] sm:text-xs uppercase cursor-pointer px-1.5 py-0.5 rounded text-black bg-black/10 font-bold transition-all" title="Toggle Sound FX">
+            <svg class="w-3 h-3 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <span id="sfxStatusText" class="hidden xs:inline">SFX: ON</span>
+          </button>
+        </div>
+
+        <!-- Previous Button -->
+        <button
+          id="btnPrev"
+          class="group flex items-center gap-1 sm:gap-1.5 text-black font-archivo font-black text-lg xs:text-xl sm:text-2xl tracking-wide uppercase cursor-pointer focus:outline-none transition-opacity hover:opacity-80 active:opacity-95"
+          title="Previous Section (زرار PREVIOUS)"
+        >
+          <span class="inline-block transition-transform duration-200 group-hover:-translate-x-1">◀</span>
+          <span>GOD IS LOVE</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Application Script Engine -->
+    <script>
+      // 1. DATA
+      const SONGS = [
+        { id: 1, title: 'باسم الحب الجميل', url: 'https://audio.jukehost.co.uk/01a0c563-b001-71fa-a83f-618c057e8dd1' },
+        { id: 2, title: 'صابر وراضي', url: 'https://audio.jukehost.co.uk/01a0c563-af3b-72ac-8c36-843b07cfa380' },
+        { id: 3, title: 'لو كل عاشق', url: 'https://audio.jukehost.co.uk/01a0c563-aeda-70f6-ba1d-5aa4221c0d14' },
+        { id: 4, title: 'ارضي بالنصيب', url: 'https://audio.jukehost.co.uk/01a10b9b-d77f-7191-adc3-4dcd847dba06' },
+        { id: 5, title: 'شكرا', url: 'https://audio.jukehost.co.uk/01a10b9b-d6ad-7229-a218-61041759d594' },
+        { id: 6, title: 'ليل العاشقين', url: 'https://audio.jukehost.co.uk/01a10b9b-d773-7248-bf6c-05b5f2c85b2f' },
+        { id: 7, title: 'ذكريات', url: 'https://audio.jukehost.co.uk/01a10b9b-d6f8-7174-92fa-7b5eaa7552ff' }
+      ];
+
+      // 2. SYNTHESIZED SOUND EFFECTS
+      let audioCtx = null;
+      let sfxEnabled = true;
+
+      function getAudioContext() {
+        if (!audioCtx) {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          if (AudioContextClass) audioCtx = new AudioContextClass();
+        }
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume().catch(() => {});
+        }
+        return audioCtx;
+      }
+
+      function playNextSound() {
+        if (!sfxEnabled) return;
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        try {
+          const t = ctx.currentTime;
+          const osc = ctx.createOscillator();
+          const g = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(340, t);
+          osc.frequency.exponentialRampToValueAtTime(680, t + 0.08);
+          g.gain.setValueAtTime(0.12, t);
+          g.gain.exponentialRampToValueAtTime(0.001, t + 0.08);
+          osc.connect(g);
+          g.connect(ctx.destination);
+          osc.start(t);
+          osc.stop(t + 0.09);
+        } catch(e) {}
+      }
+
+      function playPrevSound() {
+        if (!sfxEnabled) return;
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        try {
+          const t = ctx.currentTime;
+          const osc = ctx.createOscillator();
+          const g = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(580, t);
+          osc.frequency.exponentialRampToValueAtTime(290, t + 0.08);
+          g.gain.setValueAtTime(0.12, t);
+          g.gain.exponentialRampToValueAtTime(0.001, t + 0.08);
+          osc.connect(g);
+          g.connect(ctx.destination);
+          osc.start(t);
+          osc.stop(t + 0.09);
+        } catch(e) {}
+      }
+
+      function playClickSound() {
+        if (!sfxEnabled) return;
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        try {
+          const t = ctx.currentTime;
+          const osc = ctx.createOscillator();
+          const g = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(450, t);
+          osc.frequency.exponentialRampToValueAtTime(150, t + 0.05);
+          g.gain.setValueAtTime(0.08, t);
+          g.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
+          osc.connect(g);
+          g.connect(ctx.destination);
+          osc.start(t);
+          osc.stop(t + 0.06);
+        } catch(e) {}
+      }
+
+      let lastHoverSoundTime = 0;
+      function playHoverSound() {
+        if (!sfxEnabled) return;
+        const now = Date.now();
+        if (now - lastHoverSoundTime < 80) return; // Strict throttle prevents sound stuttering
+        lastHoverSoundTime = now;
+
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        try {
+          const t = ctx.currentTime;
+          const osc = ctx.createOscillator();
+          const g = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(760, t);
+          g.gain.setValueAtTime(0.02, t);
+          g.gain.exponentialRampToValueAtTime(0.0001, t + 0.025);
+          osc.connect(g);
+          g.connect(ctx.destination);
+          osc.start(t);
+          osc.stop(t + 0.03);
+        } catch(e) {}
+      }
+
+      // 3. BACKGROUND PARTICLES CANVAS
+      (function initParticles() {
+        const canvas = document.getElementById('particlesCanvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+          width = canvas.width = window.innerWidth;
+          height = canvas.height = window.innerHeight;
+        });
+
+        const particles = [];
+        const count = 18;
+        const types = ['ring', 'soft-circle', 'cross'];
+
+        for (let i = 0; i < count; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            size: Math.random() * 12 + 8,
+            speedX: (Math.random() - 0.5) * 0.16,
+            speedY: (Math.random() - 0.5) * 0.16,
+            opacity: Math.random() * 0.16 + 0.08,
+            type: types[i % types.length],
+            rotation: Math.random() * Math.PI * 2,
+            rotationSpeed: (Math.random() - 0.5) * 0.005,
+          });
+        }
+
+        function loop() {
+          ctx.clearRect(0, 0, width, height);
+          particles.forEach(p => {
+            p.x += p.speedX;
+            p.y += p.speedY;
+            p.rotation += p.rotationSpeed;
+            if (p.x < -30) p.x = width + 30;
+            if (p.x > width + 30) p.x = -30;
+            if (p.y < -30) p.y = height + 30;
+            if (p.y > height + 30) p.y = -30;
+
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.rotation);
+
+            if (p.type === 'ring') {
+              ctx.strokeStyle = `rgba(0,0,0,${p.opacity * 0.9})`;
+              ctx.lineWidth = 1.5;
+              ctx.beginPath();
+              ctx.arc(0, 0, p.size, 0, Math.PI * 2);
+              ctx.stroke();
+            } else if (p.type === 'soft-circle') {
+              ctx.fillStyle = `rgba(255,255,255,${p.opacity * 0.55})`;
+              ctx.beginPath();
+              ctx.arc(0, 0, p.size * 0.6, 0, Math.PI * 2);
+              ctx.fill();
+            } else if (p.type === 'cross') {
+              ctx.strokeStyle = `rgba(0,0,0,${p.opacity * 0.8})`;
+              ctx.lineWidth = 2;
+              const s = p.size * 0.7;
+              ctx.beginPath();
+              ctx.moveTo(-s, 0); ctx.lineTo(s, 0);
+              ctx.moveTo(0, -s); ctx.lineTo(0, s);
+              ctx.stroke();
+            }
+            ctx.restore();
+          });
+          requestAnimationFrame(loop);
+        }
+        loop();
+      })();
+
+      // 4. AUDIO ENGINE
+      const audio = document.getElementById('audioPlayer');
+      let currentTrackIdx = 0;
+      let isPlaying = false;
+      let currentVolume = 0.85;
+      let isMuted = false;
+
+      audio.volume = currentVolume;
+      audio.src = SONGS[0].url;
+
+      audio.addEventListener('ended', () => {
+        currentTrackIdx = (currentTrackIdx + 1) % SONGS.length;
+        loadAndPlayCurrent();
+      });
+
+      audio.addEventListener('timeupdate', updateAudioProgress);
+      audio.addEventListener('loadedmetadata', updateAudioProgress);
+
+      function loadAndPlayCurrent() {
+        audio.src = SONGS[currentTrackIdx].url;
+        audio.load();
+        if (isPlaying) {
+          audio.play().catch(() => { isPlaying = false; });
+        }
+        updateSongTitles();
+        renderPlaylist();
+      }
+
+      function togglePlayPause() {
+        playClickSound();
+        if (isPlaying) {
+          audio.pause();
+          isPlaying = false;
+        } else {
+          audio.play().then(() => { isPlaying = true; }).catch(() => { isPlaying = false; });
+        }
+        updatePlayStateUI();
+      }
+
+      function updateSongTitles() {
+        const curSong = SONGS[currentTrackIdx];
+        document.getElementById('topMusicTitle').textContent = curSong.title;
+        document.getElementById('playerSongTitle').textContent = curSong.title;
+        document.getElementById('playerTrackIndexBadge').textContent = `${String(currentTrackIdx + 1).padStart(2, '0')}/${String(SONGS.length).padStart(2, '0')}`;
+      }
+
+      function updatePlayStateUI() {
+        const playBtn = document.getElementById('btnPlayPause');
+        const statusBadge = document.getElementById('playerStatusBadge');
+        const headerWave = document.getElementById('headerWaveBars');
+
+        if (isPlaying) {
+          playBtn.innerHTML = `
+            <svg class="w-3 h-3 fill-black" viewBox="0 0 24 24">
+              <rect x="6" y="4" width="4" height="16"/>
+              <rect x="14" y="4" width="4" height="16"/>
+            </svg>
+          `;
+          statusBadge.textContent = '• PLAY';
+          headerWave.classList.remove('opacity-40');
+        } else {
+          playBtn.innerHTML = `
+            <svg class="w-3 h-3 fill-black ml-0.5" viewBox="0 0 24 24">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+          `;
+          statusBadge.textContent = '• STOP';
+          headerWave.classList.add('opacity-40');
+        }
+      }
+
+      function formatTime(s) {
+        if (isNaN(s) || s < 0) return '00:00';
+        const m = Math.floor(s / 60);
+        const sec = Math.floor(s % 60);
+        return `${String(m).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+      }
+
+      function updateAudioProgress() {
+        const curEl = document.getElementById('timeCur');
+        const durEl = document.getElementById('timeDur');
+        const barEl = document.getElementById('progressBar');
+        if (curEl) curEl.textContent = formatTime(audio.currentTime);
+        if (durEl) durEl.textContent = formatTime(audio.duration || 0);
+        if (barEl) {
+          const pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
+          barEl.style.width = `${pct}%`;
+        }
+      }
+
+      // Visualizer Bars Generator
+      (function buildVisualizer() {
+        const container = document.getElementById('visualizerContainer');
+        const heights = [30, 70, 45, 90, 60, 35, 80, 50, 95, 65, 75, 45, 70, 30, 85, 55];
+        container.innerHTML = heights.map((h, i) => `
+          <span class="v-bar w-1 sm:w-1.5 bg-[#1bd4d4] rounded-t-xs transition-all duration-150" style="height: 15%; opacity: 0.35;"></span>
+        `).join('');
+
+        setInterval(() => {
+          const bars = container.querySelectorAll('.v-bar');
+          bars.forEach((b, i) => {
+            if (isPlaying) {
+              const h = Math.max(15, (heights[i] * (i % 2 === 0 ? 0.9 : 1.1) * (0.6 + Math.random() * 0.5)) % 100);
+              b.style.height = `${h}%`;
+              b.style.opacity = '0.95';
+            } else {
+              b.style.height = '15%';
+              b.style.opacity = '0.35';
+            }
+          });
+        }, 150);
+      })();
+
+      // Playlist rendering
+      function renderPlaylist() {
+        const container = document.getElementById('playlistItems');
+        container.innerHTML = SONGS.map((s, idx) => `
+          <button onclick="selectPlaylistTrack(${idx})" onmouseenter="playHoverSound()" class="w-full flex items-center justify-between px-2 py-1 text-xs rounded transition-all cursor-pointer ${idx === currentTrackIdx ? 'bg-[#1bd4d4] text-black font-black' : 'text-neutral-200 hover:bg-[#084d61]/40'}">
+            <span class="font-tech text-[9px] opacity-75">#${idx + 1}</span>
+            <span class="truncate ml-2" dir="rtl">${s.title}</span>
+            ${idx === currentTrackIdx && isPlaying ? '<span class="text-[8px] font-tech uppercase ml-2">ACTIVE</span>' : ''}
+          </button>
+        `).join('');
+      }
+
+      window.selectPlaylistTrack = function(idx) {
+        playClickSound();
+        currentTrackIdx = idx;
+        loadAndPlayCurrent();
+        document.getElementById('playlistDrawer').classList.add('hidden');
+      };
+
+      // 5. BUTTER-SMOOTH IN-PLACE TAB SWITCHING
+      let currentTab = 0; // 0: ABOUT, 1: PLAYER, 2: TIMELINE, 3: GALLERY
+
+      function setTab(nextIdx, direction = 1) {
+        if (nextIdx === currentTab) return;
+        const prevTabEl = document.getElementById(`tab-${currentTab}`);
+        const nextTabEl = document.getElementById(`tab-${nextIdx}`);
+
+        // Prepare next element position
+        nextTabEl.classList.remove('active', 'exit-prev');
+        if (direction > 0) {
+          nextTabEl.style.transform = 'scale(0.985) translateX(24px)';
+        } else {
+          nextTabEl.style.transform = 'scale(0.985) translateX(-24px)';
+        }
+
+        // Animate out previous
+        prevTabEl.classList.remove('active');
+        if (direction > 0) {
+          prevTabEl.classList.add('exit-prev');
+        } else {
+          prevTabEl.style.transform = 'scale(0.985) translateX(24px)';
+        }
+
+        // Animate in next smoothly
+        requestAnimationFrame(() => {
+          nextTabEl.classList.add('active');
+          nextTabEl.style.transform = 'scale(1) translateX(0)';
+        });
+
+        currentTab = nextIdx;
+        updateIndicators();
+      }
+
+      function updateIndicators() {
+        document.querySelectorAll('.tab-dot').forEach((dot, idx) => {
+          if (idx === currentTab) {
+            dot.className = 'tab-dot w-5 sm:w-6 h-1.5 sm:h-2 bg-black rounded-full cursor-pointer transition-all';
+          } else {
+            dot.className = 'tab-dot w-1.5 sm:w-2 h-1.5 sm:h-2 bg-black/35 rounded-full cursor-pointer transition-all';
+          }
+        });
+      }
+
+      // 6. GALLERY GLITCH-FREE INTERACTION
+      let activeGalleryIdx = 0;
+      const galleryCards = document.querySelectorAll('.gallery-card');
+
+      function setGalleryPhoto(idx, triggerSound = true) {
+        if (idx === activeGalleryIdx && triggerSound) return;
+        if (triggerSound) playHoverSound();
+        activeGalleryIdx = idx;
+
+        galleryCards.forEach((card, i) => {
+          const dot = card.querySelector('.active-dot');
+          if (i === idx) {
+            card.className = 'gallery-card group relative aspect-square w-12 h-12 xs:w-14 xs:h-14 sm:w-20 sm:h-20 md:w-22 md:h-22 cursor-pointer overflow-hidden transition-all duration-200 ease-out transform border-2 sm:border-3 border-[#1bd4d4] scale-110 -translate-y-1.5 z-20 shadow-[0_6px_16px_rgba(0,0,0,0.6)] bg-black shrink-0';
+            dot.classList.remove('hidden');
+          } else {
+            card.className = 'gallery-card group relative aspect-square w-12 h-12 xs:w-14 xs:h-14 sm:w-20 sm:h-20 md:w-22 md:h-22 cursor-pointer overflow-hidden transition-all duration-200 ease-out transform border-2 sm:border-3 border-black hover:border-[#1bd4d4]/70 hover:scale-105 z-10 shadow-md bg-black shrink-0';
+            dot.classList.add('hidden');
+          }
+        });
+
+        document.getElementById('galleryCounterText').textContent = `PHOTO 0${idx + 1} / 05`;
+      }
+
+      galleryCards.forEach((card) => {
+        const idx = parseInt(card.getAttribute('data-photo-idx'), 10);
+        card.addEventListener('mouseenter', () => {
+          setGalleryPhoto(idx, true);
+        });
+        card.addEventListener('click', () => {
+          playClickSound();
+          setGalleryPhoto(idx, false);
+        });
+      });
+
+      // 7. TIME LINE LIVE ENGINE
+      function updateClock() {
+        const now = new Date();
+        const hoursRaw = now.getHours();
+        const hours12 = hoursRaw % 12 || 12;
+        const mins = String(now.getMinutes()).padStart(2, '0');
+        const secs = String(now.getSeconds()).padStart(2, '0');
+        const ampm = hoursRaw >= 12 ? 'PM' : 'AM';
+
+        document.getElementById('liveClockTime').textContent = `${String(hours12).padStart(2, '0')}:${mins}:${secs}`;
+        document.getElementById('liveClockAmPm').textContent = ampm;
+
+        const weekday = now.toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase();
+        const monthName = now.toLocaleDateString('en-US', { month: 'long' }).toUpperCase();
+        const day = now.getDate();
+        const year = now.getFullYear();
+        document.getElementById('liveDateText').textContent = `${weekday}, ${monthName} ${day}, ${year}`;
+        document.getElementById('liveYearBadge').textContent = year;
+      }
+
+      function initTimezone() {
+        const now = new Date();
+        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+        const offsetMin = -now.getTimezoneOffset();
+        const offsetH = Math.floor(Math.abs(offsetMin) / 60);
+        const offsetM = Math.abs(offsetMin) % 60;
+        const sign = offsetMin >= 0 ? '+' : '-';
+        const offsetStr = `UTC${sign}${String(offsetH).padStart(2, '0')}:${String(offsetM).padStart(2, '0')}`;
+
+        const parts = tz.split('/');
+        const continent = parts[0] || 'Global';
+        const city = (parts[1] || tz).replace(/_/g, ' ');
+
+        document.getElementById('liveLocationCity').textContent = `${city} • ${continent}`;
+        document.getElementById('liveTimezoneString').textContent = tz;
+        document.getElementById('liveUtcOffset').textContent = offsetStr;
+        document.getElementById('liveTzAbbr').textContent = tz.split('/')[1] || 'SYNC';
+      }
+
+      updateClock();
+      initTimezone();
+      setInterval(updateClock, 1000);
+
+      // 8. CONTROLS & WIRING
+      document.getElementById('btnNext').onclick = () => {
+        playNextSound();
+        setTab((currentTab + 1) % 4, 1);
+      };
+      document.getElementById('btnNext').onmouseenter = playHoverSound;
+
+      document.getElementById('btnPrev').onclick = () => {
+        playPrevSound();
+        setTab((currentTab - 1 + 4) % 4, -1);
+      };
+      document.getElementById('btnPrev').onmouseenter = playHoverSound;
+
+      document.querySelectorAll('.tab-dot').forEach((btn) => {
+        btn.onclick = () => {
+          playClickSound();
+          const target = parseInt(btn.getAttribute('data-tab'), 10);
+          setTab(target, target > currentTab ? 1 : -1);
+        };
+        btn.onmouseenter = playHoverSound;
+      });
+
+      // Player Controls
+      document.getElementById('btnPlayPause').onclick = togglePlayPause;
+      document.getElementById('btnNextTrack').onclick = () => {
+        playNextSound();
+        currentTrackIdx = (currentTrackIdx + 1) % SONGS.length;
+        loadAndPlayCurrent();
+      };
+      document.getElementById('btnPrevTrack').onclick = () => {
+        playPrevSound();
+        currentTrackIdx = (currentTrackIdx - 1 + SONGS.length) % SONGS.length;
+        loadAndPlayCurrent();
+      };
+      document.getElementById('btnPlaylist').onclick = () => {
+        playClickSound();
+        document.getElementById('playlistDrawer').classList.toggle('hidden');
+      };
+      document.getElementById('btnClosePlaylist').onclick = () => {
+        playClickSound();
+        document.getElementById('playlistDrawer').classList.add('hidden');
+      };
+
+      function updateVolumeUI() {
+        const text = document.getElementById('muteSongText');
+        const svg = document.getElementById('footerVolSvg');
+        const pSvg = document.getElementById('playerVolSvg');
+
+        if (isMuted || currentVolume === 0) {
+          text.textContent = 'MUTED';
+          svg.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>';
+          if (pSvg) pSvg.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>';
+        } else {
+          text.textContent = `${Math.round(currentVolume * 100)}%`;
+          svg.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>';
+          if (pSvg) pSvg.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>';
+        }
+      }
+
+      document.getElementById('playerMuteBtn').onclick = () => {
+        playClickSound();
+        isMuted = !isMuted;
+        audio.volume = isMuted ? 0 : currentVolume;
+        updateVolumeUI();
+      };
+
+      document.getElementById('volumeSlider').oninput = (e) => {
+        currentVolume = parseFloat(e.target.value);
+        isMuted = currentVolume === 0;
+        audio.volume = currentVolume;
+        updateVolumeUI();
+      };
+
+      document.getElementById('btnMuteSong').onclick = () => {
+        playClickSound();
+        isMuted = !isMuted;
+        audio.volume = isMuted ? 0 : currentVolume;
+        updateVolumeUI();
+      };
+      document.getElementById('btnMuteSong').onmouseenter = playHoverSound;
+
+      document.getElementById('seekTrack').onclick = (e) => {
+        playClickSound();
+        const rect = e.currentTarget.getBoundingClientRect();
+        const pos = (e.clientX - rect.left) / rect.width;
+        if (audio.duration) {
+          audio.currentTime = pos * audio.duration;
+        }
+      };
+
+      document.getElementById('btnToggleSFX').onclick = () => {
+        sfxEnabled = !sfxEnabled;
+        const sfxText = document.getElementById('sfxStatusText');
+        const btn = document.getElementById('btnToggleSFX');
+        if (sfxEnabled) {
+          sfxText.textContent = 'SFX: ON';
+          btn.className = 'flex items-center gap-1 font-tech text-[10px] sm:text-xs uppercase cursor-pointer px-1.5 py-0.5 rounded text-black bg-black/10 font-bold transition-all';
+          playClickSound();
+        } else {
+          sfxText.textContent = 'SFX: OFF';
+          btn.className = 'flex items-center gap-1 font-tech text-[10px] sm:text-xs uppercase cursor-pointer px-1.5 py-0.5 rounded text-black/40 line-through transition-all';
+        }
+      };
+      document.getElementById('btnToggleSFX').onmouseenter = playHoverSound;
+
+      document.getElementById('topMusicIndicator').onclick = () => {
+        playClickSound();
+        setTab(1, 1);
+      };
+
+      document.getElementById('avatarFrame').onmouseenter = playHoverSound;
+
+      // Keyboard arrow shortcuts
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') {
+          playNextSound();
+          setTab((currentTab + 1) % 4, 1);
+        } else if (e.key === 'ArrowLeft') {
+          playPrevSound();
+          setTab((currentTab - 1 + 4) % 4, -1);
+        } else if (e.key === ' ' && currentTab === 1) {
+          e.preventDefault();
+          togglePlayPause();
+        }
+      });
+
+      // Init
+      updateSongTitles();
+      renderPlaylist();
+      updateVolumeUI();
+    </script>
+  </body>
+</html>
